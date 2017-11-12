@@ -1,4 +1,4 @@
-# Yard Waste
+# Yard Sanitation
 
 Yard Waste aims to connect the agricultural sites of chicago with the chicago trees.
 
