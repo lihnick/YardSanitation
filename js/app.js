@@ -9,3 +9,57 @@ var config = {
 };
 firebase.initializeApp(config);
 
+let ref = firebase.database().ref("users");
+
+let data = {};
+let map;
+var markers = new Array();
+
+ref.once('value', function(snapshot) {
+	console.log(snapshot.val());
+	for (var user in snapshot.val()) {
+		var posts = snapshot.val()[user];
+
+		data[user] = []; 
+		var first = posts.first_name;
+		var last = posts.last_name;
+		
+		for (var time in posts.posts) {
+			var entry = posts.posts[time];
+			// console.log(time);
+			if (entry.url){
+				data[user].push({
+					"post_id": time,
+					"first_name": first,
+					"last_name": last,
+					"timestamp": entry.timestamp,
+					"img_url": entry.url,
+					"lat": entry.lat,
+					"lng": entry.lng
+				});
+			} else {
+				data[user].push({
+					"post_id": time,
+					"first_name": first,
+					"last_name": last,
+					"timestamp": entry.timestamp,
+					"lat": entry.lat,
+					"lng": entry.lng
+				});
+			}
+		}
+	}
+});
+
+function initMap() {
+	map = new google.maps.Map(document.getElementById('map'), {
+	  center: {lat: 41.878159, lng: -87.629732},
+	  zoom: 9
+	});
+}
+
+
+
+
+
+
